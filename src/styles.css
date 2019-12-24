@@ -19,3 +19,7 @@ header,
 .view {
   height: 100%;
 }
+
+.min-vh-default {
+  min-height: 70vh !important;
+}

@@ -14,6 +14,6 @@ export class AlertaComponent {
   constructor(private eventBus: NgEventBus) {}
 
   fecharMensagem() {
-    this.eventBus.cast(FECHA_MENSAGEM_EVENT);
+    this.eventBus.cast(FECHA_MENSAGEM_EVENT, this.dadosAlerta);
   }
 }

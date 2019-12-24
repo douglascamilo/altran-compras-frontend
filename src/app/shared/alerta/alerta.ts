@@ -10,8 +10,21 @@ export class DadosAlerta {
     return this.mensagem;
   }
 
-  definirMensagemErro(mensagem: string) {
+  definirMensagemErro(mensagem: string): DadosAlerta {
     this.tipo = 'danger';
     this.mensagem = mensagem;
+
+    return this;
+  }
+
+  definirMensagemSucesso(mensagem: string): DadosAlerta {
+    this.tipo = 'success';
+    this.mensagem = mensagem;
+
+    return this;
+  }
+
+  fecharMensagemAutomaticamente(tempoEmMilisegundos?: number) {
+    setTimeout(() => this.limparMensagem(), tempoEmMilisegundos || 4000);
   }
 }

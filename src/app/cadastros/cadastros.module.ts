@@ -5,6 +5,9 @@ import { MainDivModule } from '../shared/main-div/main-div.module';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ItensComponent } from './itens/itens.component';
 import { CarrinhoComponent } from './carrinho/carrinho.component';
+import { VMensagemModule } from '../shared/v-mensagem/v-mensagem.module';
+import { UsuariosService } from './usuarios/usuarios.service';
+import { HttpClientModule } from '@angular/common/http';
 import { AlertaModule } from '../shared/alerta/alerta.module';
 
 @NgModule({
@@ -15,10 +18,12 @@ import { AlertaModule } from '../shared/alerta/alerta.module';
   ],
   imports: [
     CommonModule,
+    HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    AlertaModule,
     MainDivModule,
-    AlertaModule
+    VMensagemModule
   ]
 })
 export class CadastrosModule {

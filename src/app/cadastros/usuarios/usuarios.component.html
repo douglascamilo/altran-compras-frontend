@@ -1,3 +1,33 @@
+<p class="mt-2">
+  <app-alerta [dadosAlerta]="dadosAlerta"></app-alerta>
+</p>
+
 <app-main-div>
-  <h1 class="display-4">Telas - Usuário</h1>
+  <div>
+    <h1 class="display-4">Cadastro Usuário</h1>
+  </div>
+
+  <form [formGroup]="usuarioForm" class="mt-5" (submit)="salvar()">
+    <div class="form-group">
+      <input formControlName="nome" class="form-control form-control-lg"
+             placeholder="Informe o nome do usuário" autofocus>
+
+      <app-v-mensagem
+        *ngIf="usuarioForm.get('nome').touched && usuarioForm.get('nome').errors?.required"
+        mensagem="Nome é obrigatório"></app-v-mensagem>
+    </div>
+
+    <div class="form-group">
+      <input formControlName="email" class="form-control form-control-lg" placeholder="Informe o email do usuário">
+
+      <app-v-mensagem
+        *ngIf="usuarioForm.get('email').touched && usuarioForm.get('email').errors?.required"
+        mensagem="Email é obrigatório"></app-v-mensagem>
+    </div>
+
+    <button
+      [disabled]="usuarioForm.invalid"
+      type="submit"
+      class="btn btn-primary btn-block btn-lg">Salvar</button>
+  </form>
 </app-main-div>
