@@ -1,12 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UsuariosModule } from './usuarios/usuarios.module';
 import { LayoutModule } from './layout/layout.module';
-import { ItensModule } from './itens/itens.module';
-import { CarrinhoModule } from './carrinho/carrinho.module';
+import { CadastrosModule } from './cadastros/cadastros.module';
 
 @NgModule({
   declarations: [
@@ -16,9 +13,7 @@ import { CarrinhoModule } from './carrinho/carrinho.module';
     BrowserModule,
     AppRoutingModule,
     LayoutModule,
-    UsuariosModule,
-    ItensModule,
-    CarrinhoModule
+    CadastrosModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './layout/home/home.component';
-import { UsuariosComponent } from './usuarios/usuarios.component';
-import { ItensComponent } from './itens/itens.component';
-import { CarrinhoComponent } from './carrinho/carrinho.component';
+import { UsuariosComponent } from './cadastros/usuarios/usuarios.component';
+import { ItensComponent } from './cadastros/itens/itens.component';
+import { CarrinhoComponent } from './cadastros/carrinho/carrinho.component';
 
 const routes: Routes = [
   {
