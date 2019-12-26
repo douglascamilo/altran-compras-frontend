@@ -5,6 +5,7 @@ import { MainDivModule } from '../shared/main-div/main-div.module';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ItensComponent } from './itens/itens.component';
 import { CarrinhoComponent } from './carrinho/carrinho.component';
+import { AlertaModule } from '../shared/alerta/alerta.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { CarrinhoComponent } from './carrinho/carrinho.component';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    MainDivModule
+    MainDivModule,
+    AlertaModule
   ]
 })
 export class CadastrosModule {

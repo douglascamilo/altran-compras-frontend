@@ -1,0 +1,6 @@
+<p class="mt-2">
+  <ngb-alert
+    *ngIf="dadosAlerta.possuiMensagem()" [type]="dadosAlerta.tipo" class="text-left" (close)="fecharMensagem()">
+    {{ dadosAlerta.mensagem }}
+  </ngb-alert>
+</p>
