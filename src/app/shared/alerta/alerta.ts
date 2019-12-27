@@ -17,7 +17,7 @@ export class DadosAlerta {
     return this;
   }
 
-  definirMensagemSucesso(mensagem: string): DadosAlerta {
+  definirMensagemSucesso(mensagem: string = 'Operação executada com sucesso!'): DadosAlerta {
     this.tipo = 'success';
     this.mensagem = mensagem;
 
@@ -25,6 +25,6 @@ export class DadosAlerta {
   }
 
   fecharMensagemAutomaticamente(tempoEmMilisegundos?: number) {
-    setTimeout(() => this.limparMensagem(), tempoEmMilisegundos || 4000);
+    setTimeout(() => this.limparMensagem(), tempoEmMilisegundos || 3000);
   }
 }

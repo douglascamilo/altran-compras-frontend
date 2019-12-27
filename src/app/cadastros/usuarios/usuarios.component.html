@@ -23,6 +23,10 @@
       <app-v-mensagem
         *ngIf="usuarioForm.get('email').touched && usuarioForm.get('email').errors?.required"
         mensagem="Email é obrigatório"></app-v-mensagem>
+
+      <app-v-mensagem
+        *ngIf="usuarioForm.get('email').touched && usuarioForm.get('email').errors?.email"
+        mensagem="Email inválido"></app-v-mensagem>
     </div>
 
     <button

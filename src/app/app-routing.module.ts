@@ -5,6 +5,8 @@ import { UsuariosComponent } from './cadastros/usuarios/usuarios.component';
 import { ItensComponent } from './cadastros/itens/itens.component';
 import { CarrinhoComponent } from './cadastros/carrinho/carrinho.component';
 import { Usuario } from './cadastros/usuarios/usuario';
+import { Item } from './cadastros/itens/vo/item';
+import { FluxoExecucaoEnum } from './shared/enums/fluxo-execucao.enum';
 
 const routes: Routes = [
   {
@@ -19,7 +21,11 @@ const routes: Routes = [
   },
   {
     path: 'itens',
-    component: ItensComponent
+    component: ItensComponent,
+    // data: {
+    //   item: { id: '5e05a96885d4aa362131980c', valor: 79.88, nome: 'Produto 4' },
+    //   fluxoExecucao: FluxoExecucaoEnum.EXCLUSAO,
+    // },
   },
   {
     path: 'carrinho',

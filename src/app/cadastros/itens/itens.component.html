@@ -1,3 +1,55 @@
+<p class="mt-2">
+  <app-alerta [dadosAlerta]="dadosItem.dadosAlerta"></app-alerta>
+</p>
+
 <app-main-div>
-  <h1 class="display-4">Telas - Itens</h1>
+  <div>
+    <h1 class="display-4">Telas - Itens</h1>
+  </div>
+
+  <form [formGroup]="dadosItem.formulario" class="mt-5" (submit)="salvar()">
+    <div class="form-group">
+      <input formControlName="nome" class="form-control form-control-lg"
+             [readonly]="dadosItem.isExclusao()"
+             placeholder="Informe o nome do item" autofocus>
+
+      <app-v-mensagem
+        *ngIf="dadosItem.formulario.get('nome').touched && dadosItem.formulario.get('nome').errors?.required"
+        mensagem="Nome é obrigatório"></app-v-mensagem>
+    </div>
+
+    <div class="form-group">
+      <input
+        formControlName="valor" class="form-control form-control-lg" type="number"
+        [readonly]="dadosItem.isExclusao()"
+        placeholder="Informe o valor do item">
+
+      <app-v-mensagem
+        *ngIf="dadosItem.formulario.get('valor').touched && dadosItem.formulario.get('valor').errors?.required"
+        mensagem="Valor é obrigatório"></app-v-mensagem>
+
+      <app-v-mensagem
+        *ngIf="dadosItem.formulario.get('valor').touched && dadosItem.formulario.get('valor').errors?.menorIgualZero"
+        mensagem="Valor informado precisa ser maior que zero"></app-v-mensagem>
+    </div>
+
+    <div class="form-group mt-5" *ngIf="dadosItem.isNotExclusao()">
+      <button
+        [disabled]="dadosItem.formulario.invalid"
+        type="submit"
+        class="btn btn-primary btn-block btn-lg">Salvar</button>
+    </div>
+
+    <div class="form-group d-flex mt-5" *ngIf="dadosItem.isExclusao()">
+      <div class="col-6">
+        <button class="col-11 btn btn-secondary btn-lg"
+                type="button" (click)="cancelar()">Cancelar</button>
+      </div>
+
+      <div class="col-6">
+        <button class="col-11 btn btn-danger btn-lg"
+                type="button" (click)="excluir()">Excluir</button>
+      </div>
+    </div>
+  </form>
 </app-main-div>
