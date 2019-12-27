@@ -23,3 +23,12 @@ header,
 .min-vh-default {
   min-height: 70vh !important;
 }
+
+ngb-pagination .page-item.active .page-link {
+  background-color: #989898;
+  border-color: #989898;
+}
+
+ngb-pagination .page-item .page-link {
+  color: #989898;
+}

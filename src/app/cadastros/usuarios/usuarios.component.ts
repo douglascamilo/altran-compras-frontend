@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { EXCLUIR_USUARIO_SUCESSO_EVENT, UsuariosService } from './usuarios.service';
+import { EXCLUIR_USUARIO_SUCESSO_EVENT, UsuariosService } from './service/usuarios.service';
 import { NgEventBus } from 'ng-event-bus';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DadosUsuario } from './vo/dados-usuario';
 
 @Component({
   selector: 'app-usuarios',
-  templateUrl: './usuarios.component.html',
-  providers: [ UsuariosService ]
+  templateUrl: './usuarios.component.html'
 })
 export class UsuariosComponent implements OnInit, OnDestroy {
   dadosUsuario = new DadosUsuario();
+  desabilitarSalvar = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,12 +43,14 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
   excluir() {
+    this.desabilitarSalvar = true;
+
     const usuario = this.dadosUsuario.usuario;
     this.service.excluir(usuario.id);
   }
 
   private voltarNavegacao() {
-    this.router.navigate(['']);
+    this.router.navigate(['/usuarios']);
   }
 
   private cadastrarEventBusListeners() {

@@ -7,8 +7,7 @@ import { DadosItem } from './vo/dados-item';
 
 @Component({
   selector: 'app-itens',
-  templateUrl: './itens.component.html',
-  providers: [ ItemService ]
+  templateUrl: './itens.component.html'
 })
 export class ItensComponent implements OnInit, OnDestroy {
   dadosItem = new DadosItem();

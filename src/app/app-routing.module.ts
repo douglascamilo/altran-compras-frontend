@@ -7,6 +7,8 @@ import { CarrinhoComponent } from './cadastros/carrinho/carrinho.component';
 import { Usuario } from './cadastros/usuarios/vo/usuario';
 import { Item } from './cadastros/itens/vo/item';
 import { FluxoExecucaoEnum } from './shared/enums/fluxo-execucao.enum';
+import { UsuariosListComponent } from './cadastros/usuarios/usuarios-list.component';
+import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 
 const routes: Routes = [
   {
@@ -16,19 +18,15 @@ const routes: Routes = [
   },
   {
     path: 'usuarios',
-    component: UsuariosComponent,
-    // data: {
-    //   cadastro: { id: '5e063d4b465fc644749c0a85', nome: 'Douglas Sousa', email: 'douglaszika@gmail.com' },
-    //   fluxoExecucao: FluxoExecucaoEnum.EXCLUSAO,
-    // }
+    component: UsuariosListComponent
+  },
+  {
+    path: 'usuario/form',
+    component: UsuariosComponent
   },
   {
     path: 'itens',
-    component: ItensComponent,
-    // data: {
-    //   cadastro: { id: '5e05a96885d4aa362131980c', valor: 79.88, nome: 'Produto 4' },
-    //   fluxoExecucao: FluxoExecucaoEnum.EXCLUSAO,
-    // },
+    component: ItensComponent
   },
   {
     path: 'carrinho',

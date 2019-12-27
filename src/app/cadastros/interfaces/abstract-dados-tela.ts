@@ -1,13 +1,12 @@
 import { DadosAlerta } from '../../shared/alerta/alerta';
-import { FluxoExecucaoEnum } from '../../shared/enums/fluxo-execucao.enum';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgEventBus } from 'ng-event-bus';
 import { ActivatedRoute } from '@angular/router';
+import { UrlData } from './url-data';
 
 export abstract class AbstractDadosTela {
   dadosAlerta = new DadosAlerta();
   eventos = [];
-  fluxoExecucao: FluxoExecucaoEnum;
   formulario: FormGroup;
 
   iniciarDadosTela(activatedRoute: ActivatedRoute, formBuilder: FormBuilder, eventBus: NgEventBus) {
@@ -18,20 +17,12 @@ export abstract class AbstractDadosTela {
   }
 
   iniciarItem(activatedRoute: ActivatedRoute) {
-    this.fluxoExecucao = activatedRoute.snapshot.data['fluxoExecucao'] || FluxoExecucaoEnum.INCLUSAO;
-    return activatedRoute.snapshot.data['cadastro'];
+    const urlData: UrlData<any> = JSON.parse(activatedRoute.snapshot.params.data);
+    return urlData ? urlData.cadastro : null;
   }
 
   descadastrarEventBusListeners() {
     this.eventos.forEach(evento => evento.unsubscribe());
-  }
-
-  isNotExclusao() {
-    return !this.isExclusao();
-  }
-
-  isExclusao() {
-    return this.fluxoExecucao == FluxoExecucaoEnum.EXCLUSAO;
   }
 
   definirMensagemSucesso(timeout?: number) {

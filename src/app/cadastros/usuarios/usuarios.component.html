@@ -7,10 +7,9 @@
     <h1 class="display-4">Cadastro Usuário</h1>
   </div>
 
-  <form [formGroup]="dadosUsuario.formulario" class="mt-5" (submit)="salvar()">
+  <form [formGroup]="dadosUsuario.formulario" class="mt-5">
     <div class="form-group">
       <input formControlName="nome" class="form-control form-control-lg"
-             [readonly]="dadosUsuario.isExclusao()"
              placeholder="Informe o nome do usuário" autofocus>
 
       <app-v-mensagem
@@ -21,7 +20,6 @@
     <div class="form-group">
       <input
         formControlName="email" class="form-control form-control-lg"
-        [readonly]="dadosUsuario.isExclusao()"
         placeholder="Informe o email do usuário">
 
       <app-v-mensagem
@@ -33,23 +31,20 @@
         mensagem="Email inválido"></app-v-mensagem>
     </div>
 
-    <div class="form-group mt-5" *ngIf="dadosUsuario.isNotExclusao()">
+    <div class="form-group mt-5">
       <button
-        [disabled]="dadosUsuario.formulario.invalid"
-        type="submit"
+        [disabled]="dadosUsuario.formulario.invalid || desabilitarSalvar"
+        type="button" (click)="salvar()"
         class="btn btn-primary btn-block btn-lg">Salvar</button>
-    </div>
 
-    <div class="form-group d-flex mt-5" *ngIf="dadosUsuario.isExclusao()">
-      <div class="col-6">
-        <button class="col-11 btn btn-secondary btn-lg"
-                type="button" (click)="cancelar()">Cancelar</button>
-      </div>
+      <button
+        class="btn btn-secondary btn-block btn-lg"
+        type="button" (click)="cancelar()">Cancelar</button>
 
-      <div class="col-6">
-        <button class="col-11 btn btn-danger btn-lg"
-                type="button" (click)="excluir()">Excluir</button>
-      </div>
+      <button
+        *ngIf="dadosUsuario.isAlteracao()"
+        class="btn btn-danger btn-block btn-lg"
+        type="button" (click)="excluir()">Excluir</button>
     </div>
   </form>
 </app-main-div>

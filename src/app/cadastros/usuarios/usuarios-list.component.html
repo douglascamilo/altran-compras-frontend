@@ -1,0 +1,41 @@
+<app-main-div>
+  <div>
+    <h1 class="display-4">Consulta Usuários</h1>
+  </div>
+
+  <table class="table mt-5">
+    <thead>
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Email</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let usuario of dadosUsuario.listaUsuarios" (click)="selecionarUsuario(usuario)"
+          [ngClass]="{'alert-secondary': usuario.selecionado}">
+        <td>{{ usuario.nome }}</td>
+        <td>{{ usuario.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-center mt-3">
+    <ngb-pagination
+      [collectionSize]="dadosUsuario.totalItens()"
+      [(page)]="dadosUsuario.dadosPaginacao.pagina"
+      [pageSize]="dadosUsuario.dadosPaginacao.itensPagina">
+    </ngb-pagination>
+  </div>
+
+  <div class="mt-5">
+    <button
+      type="button" class="btn btn-primary btn-lg btn-block"
+      (click)="cadastrarNovoUsuario()">Novo</button>
+
+    <button
+      *ngIf="usuarioSelecionado.selecionado"
+      type="button" class="btn btn-secondary btn-lg btn-block"
+      (click)="alterarUsuarioSelecionado()">Alterar</button>
+  </div>
+</app-main-div>

@@ -1,5 +1,4 @@
 export enum FluxoExecucaoEnum {
-  INCLUSAO,
-  ALTERACAO,
+  INCLUSAO_ALTERACAO,
   EXCLUSAO,
 }
