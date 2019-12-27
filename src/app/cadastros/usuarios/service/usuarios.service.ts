@@ -1,0 +1,41 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Usuario } from './vo/usuario';
+import { NgEventBus } from 'ng-event-bus';
+
+export const SALVAR_USUARIO_SUCESSO_EVENT = 'app:salvarUsuarioSucesso';
+export const EXCLUIR_USUARIO_SUCESSO_EVENT = 'app:excluirUsuarioSucesso';
+export const OPERACAO_USUARIO_ERRO_EVENT = 'app:operacaoUsuarioErro';
+
+const API_URL = 'http://localhost:5555/usuario';
+
+@Injectable()
+export class UsuariosService {
+
+  constructor(
+    private http: HttpClient,
+    private eventBus: NgEventBus) { }
+
+  salvar(usuario: Usuario) {
+    let observable;
+
+    if (usuario.id) {
+      const url = `${API_URL}/${usuario.id}`;
+      observable = this.http.put(url, usuario);
+    } else {
+      observable = this.http.post(API_URL, usuario);
+    }
+
+    observable.subscribe(
+      sucesso => this.eventBus.cast(SALVAR_USUARIO_SUCESSO_EVENT, sucesso),
+      falha => this.eventBus.cast(OPERACAO_USUARIO_ERRO_EVENT, falha.error.mensagem));
+  }
+
+  excluir(usuarioId: string) {
+    this.http.delete(`${API_URL}/${usuarioId}`)
+      .subscribe(
+        sucesso => this.eventBus.cast(EXCLUIR_USUARIO_SUCESSO_EVENT, sucesso),
+        falha => this.eventBus.cast(OPERACAO_USUARIO_ERRO_EVENT, falha.error.mensagem)
+      );
+  }
+}

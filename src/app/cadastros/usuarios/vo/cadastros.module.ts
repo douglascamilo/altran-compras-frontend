@@ -9,12 +9,14 @@ import { VMensagemModule } from '../shared/v-mensagem/v-mensagem.module';
 import { UsuariosService } from './usuarios/usuarios.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AlertaModule } from '../shared/alerta/alerta.module';
+import { UsuariosListComponent } from './usuarios-list/usuarios-list.component';
 
 @NgModule({
   declarations: [
     UsuariosComponent,
     ItensComponent,
-    CarrinhoComponent
+    CarrinhoComponent,
+    UsuariosListComponent
   ],
   imports: [
     CommonModule,

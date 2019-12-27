@@ -1,5 +1,5 @@
 <p class="mt-2">
-  <app-alerta [dadosAlerta]="dadosAlerta"></app-alerta>
+  <app-alerta [dadosAlerta]="dadosUsuario.dadosAlerta"></app-alerta>
 </p>
 
 <app-main-div>
@@ -7,31 +7,49 @@
     <h1 class="display-4">Cadastro Usuário</h1>
   </div>
 
-  <form [formGroup]="usuarioForm" class="mt-5" (submit)="salvar()">
+  <form [formGroup]="dadosUsuario.formulario" class="mt-5" (submit)="salvar()">
     <div class="form-group">
       <input formControlName="nome" class="form-control form-control-lg"
+             [readonly]="dadosUsuario.isExclusao()"
              placeholder="Informe o nome do usuário" autofocus>
 
       <app-v-mensagem
-        *ngIf="usuarioForm.get('nome').touched && usuarioForm.get('nome').errors?.required"
+        *ngIf="dadosUsuario.formulario.get('nome').touched && dadosUsuario.formulario.get('nome').errors?.required"
         mensagem="Nome é obrigatório"></app-v-mensagem>
     </div>
 
     <div class="form-group">
-      <input formControlName="email" class="form-control form-control-lg" placeholder="Informe o email do usuário">
+      <input
+        formControlName="email" class="form-control form-control-lg"
+        [readonly]="dadosUsuario.isExclusao()"
+        placeholder="Informe o email do usuário">
 
       <app-v-mensagem
-        *ngIf="usuarioForm.get('email').touched && usuarioForm.get('email').errors?.required"
+        *ngIf="dadosUsuario.formulario.get('email').touched && dadosUsuario.formulario.get('email').errors?.required"
         mensagem="Email é obrigatório"></app-v-mensagem>
 
       <app-v-mensagem
-        *ngIf="usuarioForm.get('email').touched && usuarioForm.get('email').errors?.email"
+        *ngIf="dadosUsuario.formulario.get('email').touched && dadosUsuario.formulario.get('email').errors?.email"
         mensagem="Email inválido"></app-v-mensagem>
     </div>
 
-    <button
-      [disabled]="usuarioForm.invalid"
-      type="submit"
-      class="btn btn-primary btn-block btn-lg">Salvar</button>
+    <div class="form-group mt-5" *ngIf="dadosUsuario.isNotExclusao()">
+      <button
+        [disabled]="dadosUsuario.formulario.invalid"
+        type="submit"
+        class="btn btn-primary btn-block btn-lg">Salvar</button>
+    </div>
+
+    <div class="form-group d-flex mt-5" *ngIf="dadosUsuario.isExclusao()">
+      <div class="col-6">
+        <button class="col-11 btn btn-secondary btn-lg"
+                type="button" (click)="cancelar()">Cancelar</button>
+      </div>
+
+      <div class="col-6">
+        <button class="col-11 btn btn-danger btn-lg"
+                type="button" (click)="excluir()">Excluir</button>
+      </div>
+    </div>
   </form>
 </app-main-div>

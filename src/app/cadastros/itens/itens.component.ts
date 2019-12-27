@@ -21,12 +21,12 @@ export class ItensComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
-    this.iniciarFormulario();
-    this.definirEventBusListeners();
+    this.dadosItem.iniciarDadosTela(this.activatedRoute, this.formBuilder, this.eventBus);
+    this.cadastrarEventBusListeners();
   }
 
   ngOnDestroy() {
-    this.descadastrarEventos();
+    this.dadosItem.descadastrarEventBusListeners();
   }
 
   salvar() {
@@ -43,25 +43,15 @@ export class ItensComponent implements OnInit, OnDestroy {
     this.service.excluir(item.id);
   }
 
-  private iniciarFormulario() {
-    this.dadosItem.iniciarDadosTela(this.activatedRoute, this.formBuilder, this.eventBus);
-  }
-
-  private definirEventBusListeners() {
-    this.dadosItem.definirEventBusListeners(this.eventBus);
-
+  private cadastrarEventBusListeners() {
     const excluirItemEvent = this.eventBus.on(EXCLUIR_ITEM_SUCESSO_EVENT).subscribe(() => {
       const timeout = 1500;
 
-      this.dadosItem.dadosAlerta.definirMensagemSucesso().fecharMensagemAutomaticamente(timeout);
+      this.dadosItem.definirMensagemSucesso(timeout);
       setTimeout(() => this.voltarNavegacao(), timeout);
     });
 
     this.dadosItem.eventos.push(excluirItemEvent);
-  }
-
-  private descadastrarEventos() {
-    this.dadosItem.descadastrarEventos();
   }
 
   private voltarNavegacao() {

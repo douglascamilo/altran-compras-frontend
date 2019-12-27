@@ -1,63 +1,64 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Usuario } from './usuario';
-import { UsuariosService } from './usuarios.service';
-import { FECHA_MENSAGEM_EVENT } from '../../shared/alerta/alerta.component';
-import { DadosAlerta } from '../../shared/alerta/alerta';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { EXCLUIR_USUARIO_SUCESSO_EVENT, UsuariosService } from './usuarios.service';
 import { NgEventBus } from 'ng-event-bus';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DadosUsuario } from './vo/dados-usuario';
 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
   providers: [ UsuariosService ]
 })
-export class UsuariosComponent implements OnInit {
-  usuarioForm: FormGroup;
-  dadosAlerta = new DadosAlerta();
-  usuario: Usuario;
+export class UsuariosComponent implements OnInit, OnDestroy {
+  dadosUsuario = new DadosUsuario();
 
   constructor(
     private formBuilder: FormBuilder,
     private service: UsuariosService,
     private eventBus: NgEventBus,
-    private activatedRoute: ActivatedRoute
-  ) {}
+    private activatedRoute: ActivatedRoute,
+    private router: Router) {}
 
   ngOnInit() {
-    this.iniciarUsuario();
-    this.iniciarForm();
-    this.definirEventoLimparMensagem();
+    this.iniciarFormulario();
+    this.cadastrarEventBusListeners();
   }
 
-  private iniciarUsuario() {
-    this.usuario = this.activatedRoute.snapshot.data['usuario'] || new Usuario();
+  ngOnDestroy() {
+    this.dadosUsuario.descadastrarEventBusListeners();
+  }
+
+  private iniciarFormulario() {
+    this.dadosUsuario.iniciarDadosTela(this.activatedRoute, this.formBuilder, this.eventBus);
   }
 
   salvar() {
-    this.usuario.nome = this.usuarioForm.get('nome').value;
-    this.usuario.email = this.usuarioForm.get('email').value;
-
-    this.service.salvar(this.usuario)
-      .subscribe(
-        () =>
-          this.dadosAlerta
-            .definirMensagemSucesso()
-            .fecharMensagemAutomaticamente(),
-        falha => this.dadosAlerta.definirMensagemErro(falha.error.mensagem)
-      );
+    const usuario = this.dadosUsuario.atualizarUsuario();
+    this.service.salvar(usuario);
   }
 
-  private iniciarForm() {
-    this.usuarioForm = this.formBuilder.group({
-      nome: [this.usuario.nome, Validators.required],
-      email: [this.usuario.email, [Validators.required, Validators.email]]
-    });
+  cancelar() {
+    this.voltarNavegacao();
   }
 
-  private definirEventoLimparMensagem() {
-    this.eventBus.on(FECHA_MENSAGEM_EVENT).subscribe(() => {
-      this.dadosAlerta.limparMensagem();
+  excluir() {
+    const usuario = this.dadosUsuario.usuario;
+    this.service.excluir(usuario.id);
+  }
+
+  private voltarNavegacao() {
+    this.router.navigate(['']);
+  }
+
+  private cadastrarEventBusListeners() {
+    const excluirItemEvent = this.eventBus.on(EXCLUIR_USUARIO_SUCESSO_EVENT).subscribe(() => {
+      const timeout = 1500;
+      this.dadosUsuario.definirMensagemSucesso(timeout);
+
+      setTimeout(() => this.voltarNavegacao(), timeout);
     });
+
+    this.dadosUsuario.eventos.push(excluirItemEvent);
   }
 }

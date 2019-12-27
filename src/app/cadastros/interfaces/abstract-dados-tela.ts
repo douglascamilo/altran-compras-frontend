@@ -14,14 +14,15 @@ export abstract class AbstractDadosTela {
     this.iniciarItem(activatedRoute);
 
     this.formulario = this.iniciarForm(formBuilder);
-    this.eventos = this.definirEventBusListeners(eventBus);
+    this.eventos = this.cadastrarEventBusListeners(eventBus);
   }
 
   iniciarItem(activatedRoute: ActivatedRoute) {
     this.fluxoExecucao = activatedRoute.snapshot.data['fluxoExecucao'] || FluxoExecucaoEnum.INCLUSAO;
+    return activatedRoute.snapshot.data['cadastro'];
   }
 
-  descadastrarEventos() {
+  descadastrarEventBusListeners() {
     this.eventos.forEach(evento => evento.unsubscribe());
   }
 
@@ -33,7 +34,11 @@ export abstract class AbstractDadosTela {
     return this.fluxoExecucao == FluxoExecucaoEnum.EXCLUSAO;
   }
 
+  definirMensagemSucesso(timeout?: number) {
+    this.dadosAlerta.definirMensagemSucesso().fecharMensagemAutomaticamente(timeout);
+  }
+
   abstract iniciarForm(formBuilder: FormBuilder);
-  abstract definirEventBusListeners(eventBus: NgEventBus);
+  abstract cadastrarEventBusListeners(eventBus: NgEventBus);
 }
 

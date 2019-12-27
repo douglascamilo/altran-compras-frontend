@@ -11,11 +11,10 @@ export class DadosItem extends AbstractDadosTela {
   item: Item;
 
   iniciarItem(activatedRoute: ActivatedRoute): void {
-    super.iniciarItem(activatedRoute);
-    this.item = activatedRoute.snapshot.data['item'] || new Item();
+    this.item = super.iniciarItem(activatedRoute) || new Item();
   }
 
-  definirEventBusListeners(eventBus: NgEventBus) {
+  cadastrarEventBusListeners(eventBus: NgEventBus) {
     const fecharMensagemEvent = eventBus.on(FECHA_MENSAGEM_EVENT).subscribe(() => {
       this.dadosAlerta.limparMensagem();
     });
@@ -25,11 +24,11 @@ export class DadosItem extends AbstractDadosTela {
       this.dadosAlerta.definirMensagemSucesso().fecharMensagemAutomaticamente();
     });
 
-    const operacaoItemEvent = eventBus.on(OPERACAO_ITEM_ERRO_EVENT).subscribe(mensagem => {
+    const operacaoErroItemEvent = eventBus.on(OPERACAO_ITEM_ERRO_EVENT).subscribe(mensagem => {
       this.dadosAlerta.definirMensagemErro(mensagem as string);
     });
 
-    return [fecharMensagemEvent, salvarItemEvent, operacaoItemEvent];
+    return [fecharMensagemEvent, salvarItemEvent, operacaoErroItemEvent];
   }
 
   atualizarItem() {
