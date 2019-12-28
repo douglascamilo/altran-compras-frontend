@@ -1,1 +1,53 @@
-<p>carrinho-novo works!</p>
+<p class="mt-2">
+  <app-alerta></app-alerta>
+</p>
+
+<app-main-div>
+  <h1 class="display-4 mb-5 font-weight-bold">Telas - Carrinho</h1>
+
+  <div class="form-group pt-4 text-left">
+    <h2>Escolha um usuário:</h2>
+  </div>
+
+  <div class="form-group">
+    <input
+      class="form-control form-control-lg"
+      placeholder="Digite algum texto para efetuar uma busca automaticamente..."
+      (keyup)="debounce.next($event.target.value)"
+      [value]="filtro">
+  </div>
+
+  <div class="form-group mt-5" *ngIf="usuariosEncontrados.length">
+    <table class="table mt-5">
+      <thead>
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Email</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let usuario of usuariosEncontrados" (click)="selecionar(usuario)"
+            [ngClass]="{'alert-secondary': usuario.selecionado}">
+          <td>{{ usuario.nome }}</td>
+          <td>{{ usuario.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center mt-3">
+      <ngb-pagination
+        [collectionSize]="usuariosEncontrados.length"
+        (page)="1"
+        pageSize="5">
+      </ngb-pagination>
+    </div>
+  </div>
+
+  <div class="form-group mt-5">
+    <button
+      *ngIf="usuarioSelecionado.selecionado"
+      class="btn btn-primary btn-lg btn-block"
+      (click)="criarOuContinuarCarrinho()">Criar um carrinho para o usuário selecionado</button>
+  </div>
+</app-main-div>

@@ -45,19 +45,34 @@ export class UsuariosService implements CadastroService<Usuario> {
   buscarTodos() {
     this.http.get(API_URL)
       .subscribe(
-        response => {
-          const listaUsuarios = (response as Usuario[]).map(item => Usuario.criar(item));
-          this.eventBus.cast(BUSCAR_USUARIOS_SUCESSO_EVENT, listaUsuarios)
-        },
-        falha => {
-          if ((falha as HttpErrorResponse).status == 400) {
-            this.eventBus.cast(BUSCAR_USUARIOS_SUCESSO_EVENT);
-            return;
-          }
-
-          this.dispararEventoErro(falha);
-        }
+        response => this.tratarRetornoBuscaSucesso(response),
+        falha => this.tratarRetornoBuscaFalha(falha)
       );
+  }
+
+  buscarPorFiltro(filtro: string) {
+    if (!filtro) {
+      return;
+    }
+
+    this.http.get(`${API_URL}/filtro/${filtro}`)
+      .subscribe(
+        response => this.tratarRetornoBuscaSucesso(response),
+        falha => this.tratarRetornoBuscaFalha(falha))
+  }
+
+  private tratarRetornoBuscaSucesso(response) {
+    const listaUsuarios = (response as Usuario[]).map(item => Usuario.criar(item));
+    this.eventBus.cast(BUSCAR_USUARIOS_SUCESSO_EVENT, listaUsuarios);
+  }
+
+  private tratarRetornoBuscaFalha(falha: HttpErrorResponse) {
+    if (falha.status == 400) {
+      this.tratarRetornoBuscaSucesso([]);
+      return;
+    }
+
+    this.dispararEventoErro(falha);
   }
 
   private dispararEventoErro(falha: HttpErrorResponse) {

@@ -14,6 +14,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ItensListComponent } from './itens/itens-list.component';
 import { CarrinhoHomeComponent } from './carrinho/home/carrinho-home.component';
 import { CarrinhoNovoComponent } from './carrinho/novo/carrinho-novo.component';
+import { CarrinhoService } from './carrinho/service/carrinho.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CarrinhoNovoComponent } from './carrinho/novo/carrinho-novo.component';
   ],
   providers: [
     UsuariosService,
-    ItemService
+    ItemService,
+    CarrinhoService
   ]
 })
 export class CadastrosModule {
