@@ -1,18 +1,9 @@
-import { Cadastro } from '../../interfaces/cadastro';
+import { Cadastro } from '../../abstracts/cadastro';
 
-export class Usuario implements Cadastro {
+export class Usuario extends Cadastro {
   id: string;
   nome: string;
   email: string;
-  selecionado: boolean = false;
-
-  selecionar()  {
-    this.selecionado = true;
-  }
-
-  deselecionar() {
-    this.selecionado = false;
-  }
 
   static criar(item: Usuario): Usuario {
     const usuario = new Usuario();

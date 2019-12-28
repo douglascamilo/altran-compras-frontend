@@ -11,6 +11,7 @@ import { DadosItem } from './vo/dados-item';
 })
 export class ItensComponent implements OnInit, OnDestroy {
   dadosItem = new DadosItem();
+  desabilitarSalvar = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,6 +39,8 @@ export class ItensComponent implements OnInit, OnDestroy {
   }
 
   excluir() {
+    this.desabilitarSalvar = true;
+
     const item = this.dadosItem.item;
     this.service.excluir(item.id);
   }
@@ -54,6 +57,6 @@ export class ItensComponent implements OnInit, OnDestroy {
   }
 
   private voltarNavegacao() {
-    this.router.navigate(['']);
+    this.router.navigate(['/itens']);
   }
 }

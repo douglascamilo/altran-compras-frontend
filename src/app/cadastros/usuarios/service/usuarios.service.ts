@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Usuario } from '../vo/usuario';
 import { NgEventBus } from 'ng-event-bus';
+import { CadastroService } from '../../abstracts/cadastro-service';
 
 export const BUSCAR_USUARIOS_SUCESSO_EVENT = 'app:buscarUsuariosSucesso';
 export const SALVAR_USUARIO_SUCESSO_EVENT = 'app:salvarUsuarioSucesso';
@@ -11,7 +12,7 @@ export const OPERACAO_USUARIO_ERRO_EVENT = 'app:operacaoUsuarioErro';
 const API_URL = 'http://localhost:5555/usuario';
 
 @Injectable()
-export class UsuariosService {
+export class UsuariosService implements CadastroService<Usuario> {
 
   constructor(
     private http: HttpClient,
@@ -49,9 +50,7 @@ export class UsuariosService {
           this.eventBus.cast(BUSCAR_USUARIOS_SUCESSO_EVENT, listaUsuarios)
         },
         falha => {
-          const response = falha as HttpErrorResponse;
-
-          if (response.status == 400) {
+          if ((falha as HttpErrorResponse).status == 400) {
             this.eventBus.cast(BUSCAR_USUARIOS_SUCESSO_EVENT);
             return;
           }

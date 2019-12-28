@@ -12,13 +12,15 @@ import { UsuariosListComponent } from './usuarios/usuarios-list.component';
 import { UsuariosService } from './usuarios/service/usuarios.service';
 import { ItemService } from './itens/service/item.service';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { ItensListComponent } from './itens/itens-list.component';
 
 @NgModule({
   declarations: [
     UsuariosComponent,
     ItensComponent,
     CarrinhoComponent,
-    UsuariosListComponent
+    UsuariosListComponent,
+    ItensListComponent
   ],
   imports: [
     CommonModule,

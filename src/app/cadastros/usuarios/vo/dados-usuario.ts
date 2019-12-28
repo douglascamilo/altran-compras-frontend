@@ -1,4 +1,3 @@
-import { AbstractDadosTela } from '../../interfaces/abstract-dados-tela';
 import { Usuario } from './usuario';
 import { ActivatedRoute } from '@angular/router';
 import { NgEventBus } from 'ng-event-bus';
@@ -10,7 +9,8 @@ import {
   SALVAR_USUARIO_SUCESSO_EVENT
 } from '../service/usuarios.service';
 import { isNotNullOrUndefined } from 'codelyzer/util/isNotNullOrUndefined';
-import { DadosPaginacao } from '../../interfaces/dados-paginacao';
+import { AbstractDadosTela } from '../../abstracts/abstract-dados-tela';
+import { DadosPaginacao } from '../../abstracts/dados-paginacao';
 
 export class DadosUsuario extends AbstractDadosTela {
   usuario: Usuario;
@@ -44,12 +44,6 @@ export class DadosUsuario extends AbstractDadosTela {
     });
   }
 
-  addUsuarios(usuarios: Usuario[]) {
-    if (isNotNullOrUndefined(usuarios)) {
-      usuarios.forEach(itemUsuario => this._listaUsuarios.push(itemUsuario));
-    }
-  }
-
   totalItens() {
     return this._listaUsuarios.length;
   }
@@ -60,6 +54,12 @@ export class DadosUsuario extends AbstractDadosTela {
 
   get listaUsuarios(): Usuario[] {
     return this.dadosPaginacao.obterDadosPaginados(this._listaUsuarios);
+  }
+
+  private addUsuarios(usuarios: Usuario[]) {
+    if (isNotNullOrUndefined(usuarios)) {
+      usuarios.forEach(itemUsuario => this._listaUsuarios.push(itemUsuario));
+    }
   }
 
   private onOperacaoUsuarioErroEvent(eventBus: NgEventBus) {

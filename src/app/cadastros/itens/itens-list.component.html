@@ -1,21 +1,21 @@
 <app-main-div>
   <div>
-    <h1 class="display-4">Consulta Usuários</h1>
+    <h1 class="display-4">Consulta Itens</h1>
   </div>
 
   <table class="table mt-5">
     <thead>
       <tr>
         <th scope="col">Nome</th>
-        <th scope="col">Email</th>
+        <th scope="col">Valor</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr *ngFor="let usuario of getDadosTela().listaUsuarios" (click)="selecionarCadastro(usuario)"
-          [ngClass]="{'alert-secondary': usuario.selecionado}">
-        <td>{{ usuario.nome }}</td>
-        <td>{{ usuario.email }}</td>
+      <tr *ngFor="let item of getDadosTela().listaItens" (click)="selecionarCadastro(item)"
+          [ngClass]="{'alert-secondary': item.selecionado}">
+        <td>{{ item.nome }}</td>
+        <td>{{ item.valor }}</td>
       </tr>
     </tbody>
   </table>

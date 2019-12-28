@@ -1,57 +1,38 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UsuariosService } from './service/usuarios.service';
-import { DadosUsuario } from './vo/dados-usuario';
 import { NgEventBus } from 'ng-event-bus';
 import { Usuario } from './vo/usuario';
 import { Router } from '@angular/router';
-import { UrlData } from '../interfaces/url-data';
-import { Cadastro } from '../interfaces/cadastro';
+import { AbstractListComponent } from '../abstracts/abstract-list-component';
+import { DadosUsuario } from './vo/dados-usuario';
 
 @Component({
   selector: 'app-usuarios-list',
   templateUrl: './usuarios-list.component.html'
 })
-export class UsuariosListComponent implements OnInit, OnDestroy {
-  dadosUsuario = new DadosUsuario();
-  usuarioSelecionado: Usuario = new Usuario();
+export class UsuariosListComponent extends AbstractListComponent<Usuario> {
 
   constructor(
-    private service: UsuariosService,
-    private eventBus: NgEventBus,
-    private router: Router) { }
+    service: UsuariosService,
+    eventBus: NgEventBus,
+    router: Router) {
 
-  ngOnInit() {
-    this.dadosUsuario.cadastrarEventBusListeners(this.eventBus);
-    this.buscar();
+    super(service, eventBus, router);
   }
 
-  ngOnDestroy(): void {
-    this.dadosUsuario.descadastrarEventBusListeners();
+  instanciarAbstractDadosTela() {
+    return new DadosUsuario();
   }
 
-  private buscar() {
-    this.service.buscarTodos();
+  instanciarCadastroSelecionado() {
+    return new Usuario();
   }
 
-  selecionarUsuario(usuario: Usuario) {
-    this.usuarioSelecionado.deselecionar();
-    this.usuarioSelecionado = usuario;
-    this.usuarioSelecionado.selecionar();
+  getUrlFormularioCadastro(): string {
+    return '/usuario/form';
   }
 
-  cadastrarNovoUsuario() {
-    this.navegarFormularioUsuario();
-  }
-
-  alterarUsuarioSelecionado() {
-    this.navegarFormularioUsuario(new UrlData(this.usuarioSelecionado));
-  }
-
-  private navegarFormularioUsuario(urlData?: UrlData<Cadastro>) {
-    const urlDataJson = urlData ? JSON.stringify(urlData) : null;
-
-    this.router.navigate(
-      ['/usuario/form', { data: urlDataJson}],
-      { skipLocationChange: true });
+  getDadosTela() {
+    return (this.dadosTela as DadosUsuario);
   }
 }

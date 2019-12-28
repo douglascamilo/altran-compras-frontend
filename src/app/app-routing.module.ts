@@ -9,6 +9,7 @@ import { Item } from './cadastros/itens/vo/item';
 import { FluxoExecucaoEnum } from './shared/enums/fluxo-execucao.enum';
 import { UsuariosListComponent } from './cadastros/usuarios/usuarios-list.component';
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
+import { ItensListComponent } from './cadastros/itens/itens-list.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   },
   {
     path: 'itens',
+    component: ItensListComponent
+  },
+  {
+    path: 'itens/form',
     component: ItensComponent
   },
   {
