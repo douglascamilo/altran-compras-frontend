@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './layout/home/home.component';
 import { UsuariosComponent } from './cadastros/usuarios/usuarios.component';
 import { ItensComponent } from './cadastros/itens/itens.component';
-import { CarrinhoComponent } from './cadastros/carrinho/carrinho.component';
-import { Usuario } from './cadastros/usuarios/vo/usuario';
-import { Item } from './cadastros/itens/vo/item';
-import { FluxoExecucaoEnum } from './shared/enums/fluxo-execucao.enum';
 import { UsuariosListComponent } from './cadastros/usuarios/usuarios-list.component';
-import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 import { ItensListComponent } from './cadastros/itens/itens-list.component';
+import { CarrinhoHomeComponent } from './cadastros/carrinho/home/carrinho-home.component';
+import { CarrinhoNovoComponent } from './cadastros/carrinho/novo/carrinho-novo.component';
 
 const routes: Routes = [
   {
@@ -35,7 +32,11 @@ const routes: Routes = [
   },
   {
     path: 'carrinho',
-    component: CarrinhoComponent
+    component: CarrinhoHomeComponent
+  },
+  {
+    path: 'carrinho/novo',
+    component: CarrinhoNovoComponent
   },
 ];
 
