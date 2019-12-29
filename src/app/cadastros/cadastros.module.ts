@@ -15,6 +15,10 @@ import { ItensListComponent } from './itens/itens-list.component';
 import { CarrinhoHomeComponent } from './carrinho/home/carrinho-home.component';
 import { CarrinhoNovoComponent } from './carrinho/novo/carrinho-novo.component';
 import { CarrinhoService } from './carrinho/service/carrinho.service';
+import { CarrinhoItensComponent } from './carrinho/itens/carrinho-itens.component';
+import { CarrinhoItensBuscarComponent } from './carrinho/itens-buscar/carrinho-itens-buscar.component';
+import { AppRoutingModule } from '../app-routing.module';
+import { CarrinhoItensIncluirComponent } from './carrinho/itens-incluir/carrinho-itens-incluir.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +27,17 @@ import { CarrinhoService } from './carrinho/service/carrinho.service';
     UsuariosListComponent,
     ItensListComponent,
     CarrinhoHomeComponent,
-    CarrinhoNovoComponent
+    CarrinhoNovoComponent,
+    CarrinhoItensComponent,
+    CarrinhoItensBuscarComponent,
+    CarrinhoItensIncluirComponent
   ],
   imports: [
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    AppRoutingModule,
     AlertaModule,
     MainDivModule,
     VMensagemModule,
@@ -42,5 +50,4 @@ import { CarrinhoService } from './carrinho/service/carrinho.service';
   ]
 })
 export class CadastrosModule {
-
 }

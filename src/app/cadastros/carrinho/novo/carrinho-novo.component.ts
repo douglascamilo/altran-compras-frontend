@@ -7,23 +7,26 @@ import { NgEventBus } from 'ng-event-bus';
 import { EventBusHelper } from '../../../shared/event-bus/event-bus.helper';
 import { CarrinhoService, CRIAR_CARRINHO_SUCESSO } from '../service/carrinho.service';
 import { Carrinho } from '../vo/carrinho';
+import { Router } from '@angular/router';
+import { DadosPaginacao } from '../../abstracts/dados-paginacao';
 
 @Component({
   selector: 'app-carrinho-novo',
   templateUrl: './carrinho-novo.component.html'
 })
 export class CarrinhoNovoComponent implements OnInit, OnDestroy {
-  filtro: string = '';
   debounce: Subject<string> = new Subject<string>();
   usuariosEncontrados: Usuario[] = [];
   usuarioSelecionado: Usuario = new Usuario();
   carrinho: Carrinho;
   eventBusHelper = new EventBusHelper();
+  dadosPaginacao = new DadosPaginacao<Usuario>();
 
   constructor(
     private usuarioService: UsuariosService,
+    private carrinhoService: CarrinhoService,
     private eventBus: NgEventBus,
-    private carrinhoService: CarrinhoService) { }
+    private router: Router) { }
 
   ngOnInit() {
     this.cadastrarEventBusListeners();
@@ -47,7 +50,10 @@ export class CarrinhoNovoComponent implements OnInit, OnDestroy {
         () => null,
         () => this.carrinhoService.criar(this.usuarioSelecionado.id)
       );
+  }
 
+  listaPaginada() {
+    return this.dadosPaginacao.obterDadosPaginados(this.usuariosEncontrados);
   }
 
   private buscarUsuariosPorFiltro(textoFiltro: string) {
@@ -67,9 +73,7 @@ export class CarrinhoNovoComponent implements OnInit, OnDestroy {
   private cadastrarEventoBuscaUsuarios() {
     this.debounce
       .pipe(debounceTime(500))
-      .subscribe(textoFiltro => {
-        this.buscarUsuariosPorFiltro(textoFiltro);
-      });
+      .subscribe(textoFiltro => this.buscarUsuariosPorFiltro(textoFiltro));
   }
 
   private onBuscarUsuariosSucesso() {
@@ -78,9 +82,14 @@ export class CarrinhoNovoComponent implements OnInit, OnDestroy {
   }
 
   private onCriarCarrinhoSucesso() {
-    return this.eventBus.on(CRIAR_CARRINHO_SUCESSO)
-      .subscribe(carrinho => {
-        this.carrinho = carrinho as Carrinho;
-      });
+    return this.eventBus.on<Carrinho>(CRIAR_CARRINHO_SUCESSO)
+      .subscribe(carrinho => this.navegarParaItensCarrinho(carrinho));
+  }
+
+  private navegarParaItensCarrinho(carrinho: Carrinho) {
+    this.router.navigateByUrl(
+      '/carrinho/itens',
+      { state: { carrinho } }
+    );
   }
 }

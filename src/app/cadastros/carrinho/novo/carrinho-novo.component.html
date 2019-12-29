@@ -3,7 +3,7 @@
 </p>
 
 <app-main-div>
-  <h1 class="display-4 mb-5 font-weight-bold">Telas - Carrinho</h1>
+  <h1 class="display-4 mb-5 font-weight-bold">Carrinho</h1>
 
   <div class="form-group pt-4 text-left">
     <h2>Escolha um usuário:</h2>
@@ -13,8 +13,7 @@
     <input
       class="form-control form-control-lg"
       placeholder="Digite algum texto para efetuar uma busca automaticamente..."
-      (keyup)="debounce.next($event.target.value)"
-      [value]="filtro">
+      (keyup)="debounce.next($event.target.value)">
   </div>
 
   <div class="form-group mt-5" *ngIf="usuariosEncontrados.length">
@@ -27,7 +26,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let usuario of usuariosEncontrados" (click)="selecionar(usuario)"
+        <tr *ngFor="let usuario of listaPaginada()" (click)="selecionar(usuario)"
             [ngClass]="{'alert-secondary': usuario.selecionado}">
           <td>{{ usuario.nome }}</td>
           <td>{{ usuario.email }}</td>
@@ -38,8 +37,8 @@
     <div class="d-flex justify-content-center mt-3">
       <ngb-pagination
         [collectionSize]="usuariosEncontrados.length"
-        (page)="1"
-        pageSize="5">
+        [(page)]="dadosPaginacao.pagina"
+        [pageSize]="dadosPaginacao.itensPagina">
       </ngb-pagination>
     </div>
   </div>

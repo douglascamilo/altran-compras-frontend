@@ -4,12 +4,14 @@ export class Item extends Cadastro {
   id: string;
   nome: string;
   valor: number;
+  quantidade: number;
 
-  static criar(response: Item) {
+  static parse(response: Item) {
     const item = new Item();
     item.id = response.id;
     item.nome = response.nome;
     item.valor = response.valor;
+    item.quantidade = response.quantidade;
 
     return item;
   }

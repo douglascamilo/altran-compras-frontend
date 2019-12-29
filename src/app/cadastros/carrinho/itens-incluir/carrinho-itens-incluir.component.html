@@ -1,0 +1,42 @@
+<p class="mt-2">
+  <app-alerta></app-alerta>
+</p>
+
+<app-main-div>
+  <div>
+    <h1 class="display-4 font-weight-bold">Carrinho - Salvar item</h1>
+  </div>
+
+  <form [formGroup]="formulario" class="mt-5">
+    <div class="form-group">
+      <input
+        formControlName="nome" class="form-control form-control-lg" readonly>
+    </div>
+
+    <div class="form-group">
+      <input
+        formControlName="valor" class="form-control form-control-lg" readonly>
+    </div>
+
+    <div class="form-group">
+      <input
+        formControlName="quantidade" class="form-control form-control-lg"
+        placeholder="Informe quantidade do item">
+
+      <app-v-mensagem
+        *ngIf="formulario.get('quantidade').touched && formulario.get('quantidade').errors?.required"
+        mensagem="Quantidade é obrigatória"></app-v-mensagem>
+
+      <app-v-mensagem
+        *ngIf="formulario.get('quantidade').touched && formulario.get('quantidade').errors?.menorIgualZero"
+        mensagem="Quantidade informada precisa ser maior que zero"></app-v-mensagem>
+    </div>
+
+    <div class="form-group mt-5">
+      <button
+        [disabled]="formulario.invalid"
+        class="btn btn-primary btn-lg btn-block"
+        (click)="salvar()">Salvar</button>
+    </div>
+  </form>
+</app-main-div>

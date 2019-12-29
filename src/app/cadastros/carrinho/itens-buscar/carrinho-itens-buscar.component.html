@@ -1,0 +1,48 @@
+<p class="mt-2">
+  <app-alerta></app-alerta>
+</p>
+
+<app-main-div>
+  <h1 class="display-4 mb-5 font-weight-bold">Carrinho - Selecionar item</h1>
+
+  <div class="form-group mt-4">
+    <input
+      class="form-control form-control-lg"
+      placeholder="Digite algum texto para efetuar uma busca automaticamente..."
+      (keyup)="debounce.next($event.target.value)">
+  </div>
+
+  <div class="form-group mt-5" *ngIf="itensEncontrados.length">
+    <table class="table mt-5">
+      <thead>
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Valor</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of listaPaginada()" (click)="selecionar(item)"
+            [ngClass]="{'alert-secondary': item.selecionado}">
+          <td>{{ item.nome }}</td>
+          <td>{{ item.valor }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center mt-3" *ngIf="itensEncontrados.length > dadosPaginacao.itensPagina">
+      <ngb-pagination
+        [collectionSize]="itensEncontrados.length"
+        [(page)]="dadosPaginacao.pagina"
+        [pageSize]="dadosPaginacao.itensPagina">
+      </ngb-pagination>
+    </div>
+  </div>
+
+  <div class="form-group mt-5">
+    <button
+      *ngIf="itemSelecionado.selecionado"
+      class="btn btn-primary btn-lg btn-block"
+      (click)="configurarQuantidadeItemSelecionado()">Selecionar o produto {{ itemSelecionado.nome }}</button>
+  </div>
+</app-main-div>

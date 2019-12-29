@@ -7,6 +7,9 @@ import { UsuariosListComponent } from './cadastros/usuarios/usuarios-list.compon
 import { ItensListComponent } from './cadastros/itens/itens-list.component';
 import { CarrinhoHomeComponent } from './cadastros/carrinho/home/carrinho-home.component';
 import { CarrinhoNovoComponent } from './cadastros/carrinho/novo/carrinho-novo.component';
+import { CarrinhoItensComponent } from './cadastros/carrinho/itens/carrinho-itens.component';
+import { CarrinhoItensBuscarComponent } from './cadastros/carrinho/itens-buscar/carrinho-itens-buscar.component';
+import { CarrinhoItensIncluirComponent } from './cadastros/carrinho/itens-incluir/carrinho-itens-incluir.component';
 
 const routes: Routes = [
   {
@@ -37,6 +40,20 @@ const routes: Routes = [
   {
     path: 'carrinho/novo',
     component: CarrinhoNovoComponent
+  },
+  {
+    path: 'carrinho/itens',
+    component: CarrinhoItensComponent,
+    children: [
+      {
+        path: 'buscar',
+        component: CarrinhoItensBuscarComponent
+      },
+      {
+        path: 'incluir',
+        component: CarrinhoItensIncluirComponent
+      }
+    ]
   },
 ];
 
